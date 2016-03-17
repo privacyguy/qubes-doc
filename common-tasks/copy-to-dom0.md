@@ -16,7 +16,12 @@ First, there should normally be few reasons for the user to want to copy files f
 For this reason we intentionally do not provide a convenient tool for copying files between VMs and Dom0 (while we provide a tool for copying files between VMs). However, if you're determined to copy some files to Dom0 anyway, you can use the following method (run this command from Dom0's console):
 
 ~~~
-qvm-run --pass-io <src_domain> 'cat /path/to/file_in_src_domain' > /path/to/file_name_in_dom0
+qvm-run --pass-io <src_domain> cat '/path/to/file_in_src_domain' > /path/to/file_name_in_dom0
+
+Example of copying a file called myfile.txt from an AppVM called Work into the appvm directory in Dom0: 
+[Dom0]$ qvm-run --pass-io </var/lib/qubes/appvms/Work> cat 'Home/User/Downloads/myfile.txt' > /var/lib/qubes/appvms/myfile.txt
+
+Note:  Trying to copy a file directly to the root directory (/) within Dom0 will result in a Permission Denied error
 ~~~
 
 BTW, you can use the same method to copy files from Dom0 to VMs:
